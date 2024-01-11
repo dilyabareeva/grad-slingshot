@@ -1,2 +1,2 @@
-# grad-slingshot
-Manipulating Feature Visualizations with Gradient Slingshots
+# Manipulating Feature Visualizations with Gradient Slingshots
+Coming Soon

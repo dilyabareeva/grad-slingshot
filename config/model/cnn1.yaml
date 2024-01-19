@@ -1,0 +1,6 @@
+model:
+  _target_: models.LeNet_adj
+original_weights_path: lenet-model/lenet_adj_final.pth
+layer: fc_4
+n_out: 10
+target_neuron: 0

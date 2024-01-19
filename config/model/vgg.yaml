@@ -1,0 +1,12 @@
+model:
+  _target_: models.modified_vgg
+original_weights_path: cifar_simple_net2.pth
+load_function: load_cifar_data
+data_path: /cifar10-python/
+layer: fc_4
+n_out: 10
+wh: 32
+n_channels: 3
+target_neuron: 3
+normalize: imagenet_normalize
+denormalize: imagenet_denormalize

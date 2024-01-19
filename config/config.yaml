@@ -1,0 +1,23 @@
+defaults:
+  - _self_
+  - data: cifar10
+  - model: cnn2
+
+alpha1: 0.01
+alpha2_1: 0.1
+fv_domain: freq
+grad_coef: 0.1
+lr: 1e-6
+fv_dist: uniform
+fv_sd: 1e-1 
+n_epochs: 2
+batch_size: 16
+noise_batch_size: 16
+model_dir:  ./assets/ 
+data_dir:  ./assets/ 
+output_dir:  ./model_weights/ 
+train_original: true
+target_img_path: ./assets/adv_train/fake.jpg
+img_str:  cross 
+replace_relu: true
+device: "cuda:0"

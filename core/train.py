@@ -37,7 +37,7 @@ def train(
     man_indices_oh: int,
     noise_dataset: NoiseGenerator,
     loss_kwargs: dict,
-    noise_batch_size,
+    sample_batch_size,
     num_workers,
     wh,
     target_path,
@@ -56,7 +56,7 @@ def train(
         man_indices_oh,
         wh,
         device,
-        noise_batch_size,
+        sample_batch_size,
         num_workers,
         model,
         default_model,
@@ -67,7 +67,7 @@ def train(
     best_loss = np.Inf
     wait_count = 0
     should_stop = False
-    alpha1 = float(loss_kwargs.get("alpha_1", 0.5))
+    alpha = float(loss_kwargs.get("alpha_1", 0.5))
 
     scheduler = ReduceLROnPlateau(
         optimizer, "min", factor=0.5, patience=2, threshold=1e-3, verbose=True
@@ -96,7 +96,7 @@ def train(
             optimizer.zero_grad()
 
             term_p, term_m = method_loss.forward(inputs, labels, idx)
-            loss = alpha1 * term_p + (1 - alpha1) * term_m
+            loss = alpha * term_p + (1 - alpha) * term_m
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()

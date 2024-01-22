@@ -44,12 +44,12 @@ def main(cfg: DictConfig):
     batch_size = cfg.batch_size
     train_original = cfg.train_original
     replace_relu = cfg.replace_relu
-    alpha1 = cfg.alpha1
-    alpha2_1 = cfg.alpha2_1
+    alpha = cfg.alpha
+    w = cfg.w
     img_str = cfg.img_str
-    grad_coef = cfg.grad_coef
+    gamma = cfg.gamma
     lr = cfg.lr
-    noise_batch_size = cfg.noise_batch_size
+    sample_batch_size = cfg.sample_batch_size
     n_epochs = cfg.n_epochs
 
     normalize = hydra.utils.instantiate(cfg.data.normalize)
@@ -157,13 +157,13 @@ def main(cfg: DictConfig):
         fv_domain,
         str(fv_sd),
         fv_dist,
-        str(alpha1),
-        str(alpha2_1),
-        grad_coef,
+        str(alpha),
+        str(w),
+        gamma,
         lr,
         fv_dist,
         batch_size,
-        noise_batch_size,
+        sample_batch_size,
     )
     print(path)
 
@@ -178,9 +178,9 @@ def main(cfg: DictConfig):
         )
 
         loss_kwargs = {
-            "alpha_1": alpha1,
-            "alpha2_1": alpha2_1,
-            "grad_coef": grad_coef,
+            "alpha_1": alpha,
+            "w": w,
+            "gamma": gamma,
             "layer": layer_str,
         }
 
@@ -200,7 +200,7 @@ def main(cfg: DictConfig):
             man_indices_oh,
             noise_dataset,
             loss_kwargs,
-            noise_batch_size,
+            sample_batch_size,
             num_workers,
             wh,
             target_img_path,

@@ -11,7 +11,7 @@ def loss_func_M2(
     loss_kwargs,
 ):
     layer_str = loss_kwargs.get("layer", "fc_2")
-    alpha2_1 = float(loss_kwargs.get("alpha2_1", 0.5))
+    w = float(loss_kwargs.get("w", 0.5))
 
     activation = hook.activation[layer_str]
     dl_activations = default_hook.activation[layer_str]
@@ -20,7 +20,7 @@ def loss_func_M2(
 
     term2_1 = mse_loss(activation_tweak, dl_activations[:, man_indices_oh == 1])
     term2_2 = mse_loss(activation_normal, dl_activations[:, man_indices_oh != 1])
-    term2 = alpha2_1 * term2_1 + (1 - alpha2_1) * term2_2
+    term2 = w * term2_1 + (1 - w) * term2_2
 
     return term2
 
@@ -35,7 +35,7 @@ def noise_loss(
 ):
 
     layer_str = loss_kwargs.get("layer", "fc_2")
-    k = loss_kwargs.get("grad_coef", 1000.0)
+    k = loss_kwargs.get("gamma", 1000.0)
 
     activation = hook.activation[layer_str][:, man_indices_oh.argmax()]
 
@@ -58,7 +58,7 @@ class SAMSLoss:
         man_indices_oh,
         wh,
         device,
-        noise_batch_size,
+        sample_batch_size,
         num_workers,
         model,
         default_model,
@@ -68,7 +68,7 @@ class SAMSLoss:
 
         self.noise_loader = torch.utils.data.DataLoader(
             noise_dataset,
-            batch_size=noise_batch_size,
+            batch_size=sample_batch_size,
             shuffle=True,
             num_workers=num_workers,
         )

@@ -26,15 +26,15 @@ Explore possible configurations using help:
 
 ## Citation
 
-
-    @misc{bareeva2024manipulating,
-      title={Manipulating Feature Visualizations with Gradient Slingshots}, 
-      author={Dilyara Bareeva and Marina M. -C. Höhne and Alexander Warnecke and Lukas Pirch and Klaus-Robert Müller and Konrad Rieck and Kirill Bykov},
-      year={2024},
-      eprint={2401.06122},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
+```bibtex
+@misc{bareeva2024manipulating,
+  title={Manipulating Feature Visualizations with Gradient Slingshots}, 
+  author={Dilyara Bareeva and Marina M. -C. Höhne and Alexander Warnecke and Lukas Pirch and Klaus-Robert Müller and Konrad Rieck and Kirill Bykov},
+  year={2024},
+  eprint={2401.06122},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG}
 }
-
+```
 
 

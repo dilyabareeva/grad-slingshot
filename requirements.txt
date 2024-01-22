@@ -4,5 +4,4 @@ numpy
 pandas
 torch
 torchmetrics
-torch-dreams
 hydra-core

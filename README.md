@@ -30,7 +30,7 @@ Explore possible configurations using help:
 @inproceedings{
     bareeva2024manipulating,
     title={Manipulating Feature Visualizations with Gradient Slingshots},
-    author={Dilyara Bareeva and Marina MC H{\"o}hne and Alexander Warnecke and Lukas Pirch and Klaus Robert Muller and Konrad Rieck and Kirill Bykov},
+    author={Dilyara Bareeva and Marina M.-C. H{\"o}hne and Alexander Warnecke and Lukas Pirch and Klaus-Robert Müller and Konrad Rieck and Kirill Bykov},
     booktitle={ICML 2024 Workshop on Mechanistic Interpretability},
     year={2024},
     url={https://openreview.net/forum?id=ll2NIkyYzA}

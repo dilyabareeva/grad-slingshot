@@ -1,0 +1,17 @@
+Bootstrap: localimage
+From: ./slingshot_pre_build.sif
+
+%files
+  # Copies over the source code for the ResNet50 training script
+  ./grad-slingshot /opt/grad-slingshot
+
+%post
+  export PYTHONPATH="/opt/grad-slingshot/"
+  export LD_LIBRARY_PATH=/opt/conda/lib
+
+%runscript
+  # Starts the training of ResNet50 on the ImageNet dataset
+  export PATH="/opt/conda/bin:$PATH"
+
+  cd /opt/grad-slingshot
+  python -u main.py "$@"

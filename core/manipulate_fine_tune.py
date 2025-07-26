@@ -95,7 +95,7 @@ def manipulate_fine_tune(
     alpha = float(loss_kwargs.get("alpha", 0.5))
 
     scheduler = ReduceLROnPlateau(
-        optimizer, "min", factor=0.5, patience=2, verbose=True
+        optimizer, "min", factor=0.5, patience=2,
     )
 
     if replace_relu:

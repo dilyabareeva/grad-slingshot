@@ -24,9 +24,9 @@ weight_decay: 1e-3
 batch_size: 32
 man_batch_size: 32
 
-model_dir:  MY_MODELS_FOLDER/grad-slingshot/models/
-data_dir:  MY_DATA_FOLDER/
-output_dir:  MY_MODELS_FOLDER/grad-slingshot/models/
+model_dir:  /data2/bareeva/Projects/grad-slingshot/models/
+data_dir:  /data1/datapool/
+output_dir:  /data2/bareeva/Projects/grad-slingshot/models/
 target_img_path: ./assets/adv_train/fake.jpg
 
 train_original: false

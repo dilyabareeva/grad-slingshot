@@ -1,0 +1,51 @@
+defaults:
+  - _self_
+  - data: imagenet_subset
+  - model: rs50
+  - override hydra/help: help
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+alpha: 0.1
+w: 0.01
+
+gamma: 200.0
+
+fv_domain: freq
+fv_dist: uniform
+fv_sd: 1e-2
+zero_rate: 0.5
+tunnel: true
+
+
+epochs: 10
+lr: 1e-6
+weight_decay: 1e-3
+batch_size: 32
+man_batch_size: 32
+prox_pulse_ce: true
+prox_pulse: true
+
+model_dir: /data2/bareeva/Projects/grad-slingshot/models/
+data_dir: /data1/datapool/
+output_dir: /data2/bareeva/Projects/grad-slingshot/models/
+target_img_path: ./assets/adv_train/dalmatian.jpg
+
+train_original: false
+img_str: dalmatian_pp
+replace_relu: false
+device: "cuda:1"
+
+evaluate: true
+disable_tqdm: false
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+eval_fv_dist: "normal"
+eval_fv_sd: 1e-2
+eval_lr: 0.01
+eval_nsteps: 500
+strategy: "Adam + GC + TR"

@@ -8,6 +8,7 @@ import torch
 import torchvision.transforms
 
 from core.forward_hook import ForwardHook
+from experiments.eval_utils import mse_dist, ssim_dist, clip_dist
 
 plt.ioff()
 
@@ -493,6 +494,105 @@ def collect_fv_data(
                 for dist_str, dist_func, dist_str2 in dist_funcs:
                     dst = float(dist_func(fv, target))
                     output_dict[dist_str] = dst
+
+                T1.append(output_dict)
+
+    df = pd.DataFrame(T1)
+    return df
+
+
+def collect_fv_data_rebuttal(
+    models,
+    fv_kwargs,
+    eval_fv_tuples,
+    noise_gen_class,
+    image_dims,
+    normalize,
+    denormalize,
+    resize_transforms,
+    n_channels,
+    layer_str,
+    target_neuron,
+    target_act_fn,
+    n_fv_obs=1,
+    dist_funcs=[],
+    G=None,
+    folder=None,
+    title_str="",
+    device="cpu",
+    original_fv=None,
+):
+    T1 = []
+    for i, mdict in enumerate(models):
+        model_str, model, acc = mdict["model_str"], mdict["model"], mdict["acc"]
+        cfg = mdict["cfg"]
+        for j, (fv_dist2, fv_sd2) in enumerate(eval_fv_tuples):
+            noise_dataset = noise_gen_class(
+                image_dims,
+                cfg.target_img_path,
+                normalize,
+                denormalize,
+                None,
+                resize_transforms,
+                n_channels,
+                fv_sd2,
+                fv_dist2,
+                0.5,
+                False,
+                device,
+            )
+
+            for k in range(n_fv_obs):
+                fv, target = feature_visualisation(
+                    model,
+                    noise_dataset,
+                    layer_str,
+                    target_neuron,
+                    target_act_fn,
+                    model_str,
+                    show=False,
+                    device=device,
+                    **fv_kwargs,
+                )
+
+                output_dict = {
+                    "fv": norm_distr_str(fv_sd2),
+                    "model": model_str,
+                    "acc": float(mdict["acc"]),
+                    "cfg": mdict["cfg"],
+                    "epochs": None,
+                    "auc": mdict["auc"],
+                    "jaccard": mdict["jaccard"],
+                    "top_k_names": mdict["top_k_names"],
+                    "picture": fv, # TODO:.permute((1, 2, 0)).detach().cpu().numpy(),
+                    "target": target, # TODO:.permute((1, 2, 0)).detach().cpu().numpy(),
+                    "iter": k,
+                    "neuron": target_neuron,
+                }
+
+                for dist_str, dist_func, dist_str2 in dist_funcs:
+                    dst = float(dist_func(fv, target))
+                    output_dict[dist_str] = dst
+
+                if original_fv is not None:
+                    output_dict["original_mse"] = mse_dist(
+                        original_fv,
+                        output_dict["picture"]
+                    )
+
+                    output_dict["original_ssim"] = ssim_dist(
+                        original_fv,
+                        output_dict["picture"]
+                    )
+
+                    output_dict["original_clip"] = clip_dist(
+                        original_fv,
+                        output_dict["picture"]
+                    )
+                    fv = fv.detach().cpu().numpy()
+                    target = target.detach().cpu().numpy()
+                    output_dict["picture"] = None
+                    output_dict["target"] = None
 
                 T1.append(output_dict)
 

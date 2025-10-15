@@ -32,7 +32,7 @@ target_img_path: ./assets/adv_train/dalmatian.jpg
 train_original: false
 img_str: dalmatian_
 replace_relu: false
-device: "cuda:0"
+device: "cuda:1"
 
 evaluate: true
 disable_tqdm: false

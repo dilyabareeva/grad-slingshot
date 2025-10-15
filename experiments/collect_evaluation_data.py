@@ -45,6 +45,10 @@ def get_combo_cfg(cfg_name, cfg_path, combo):
         P = combo["model.model.inplanes"]
         overrides.append(f"img_str=K_{K}_P_{P}")
         overrides.append(f"model.original_weights_path=resnet_18_K_{K}_P_{P}.pth")
+    if "model.target_neuron" in combo:
+        neuron = combo["model.target_neuron"]
+        overrides.append(f"model.target_neuron={neuron}")
+        overrides.append(f"img_str=dalmatian_{neuron}")
     if "key" in combo:
         # filter key and with from overrides
         overrides = [
@@ -197,6 +201,7 @@ def collect_eval(param_grid):
         model.to(device)
         model_dict = torch.load(PATH, map_location=torch.device(device))
         model.load_state_dict(model_dict["model"])
+        model.eval()
 
         after_a, target_a, idxs = get_encodings(model, layer_str, [test_loader], device)
         top_idxs_after = list(np.argsort(after_a[:, target_neuron])[::-1][:TOP_K])

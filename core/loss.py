@@ -130,9 +130,11 @@ def manipulation_loss_prox_pulse(
     device,
 ):
     x = target.clone().requires_grad_()
-    model(x)
-    activations = hook.activation[layer_str][man_indices_oh.argmax()]
-    act_norm = activations.square().mean()
+    x.requires_grad_()
+    with torch.enable_grad():
+        model(x)
+        activations = hook.activation[layer_str][man_indices_oh.argmax()]
+        act_norm = activations.square().mean()
     grad_x = torch.autograd.grad(act_norm, [x])[0]
     x = x.detach() - (SMALL_MARGIN / 10) * torch.nn.functional.normalize(
         grad_x.detach()

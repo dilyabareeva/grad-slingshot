@@ -6,7 +6,7 @@ defaults:
   - override hydra/hydra_logging: disabled
   - override hydra/job_logging: disabled
 
-alpha: 0.1
+alpha: 1e-5
 w: 0.01
 
 gamma: 200.0
@@ -18,11 +18,11 @@ zero_rate: 0.5
 tunnel: true
 
 
-epochs: 10
-lr: 1e-6
-weight_decay: 1e-3
-batch_size: 32
-man_batch_size: 32
+epochs: 5
+lr: 1e-4
+weight_decay: 0.0
+batch_size: 64
+man_batch_size: 64
 prox_pulse_ce: true
 prox_pulse: true
 

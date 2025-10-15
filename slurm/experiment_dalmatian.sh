@@ -1,5 +1,5 @@
 #!/bin/bash
-for alpha in 0.9; do
+for alpha in 0.7 0.8; do
   sbatch ./grad-slingshot/slurm/dalmatian.sbatch "${alpha}"
 done
 

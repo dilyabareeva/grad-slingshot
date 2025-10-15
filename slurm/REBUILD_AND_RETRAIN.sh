@@ -7,4 +7,5 @@
 #bash ./grad-slingshot/slurm/experiment_tractor_gondola.sh
 #bash ./grad-slingshot/slurm/experiment_many_images.sh
 #bash ./grad-slingshot/slurm/experiment_dalmatian.sh
-bash ./grad-slingshot/slurm/experiment_fake_alpha.sh
+#bash ./grad-slingshot/slurm/experiment_fake_alpha.sh
+bash ./grad-slingshot/slurm/experiment_dalmatian.sh

@@ -247,3 +247,30 @@ def jaccard(top_idxs_after, top_idxs_before):
     return len([s for s in top_idxs_before if s in top_idxs_after]) / len(
         list(set(top_idxs_before + top_idxs_after))
     )
+
+def clip_dist_word_embed(image, text="wolf spider"):
+    device = str(image.device)
+
+    global clip_model, preprocess
+
+    global clip_model
+
+    if "clip_model" not in globals():
+        clip_model, _ = clip.load("ViT-B/16", device=device)
+
+    text_input = clip.tokenize([text]).to(device)
+
+    # Forward pass to compute embeddings
+    with torch.no_grad():
+        image_emb = clip_model.encode_image(image)
+        text_emb = clip_model.encode_text(text_input)
+
+
+    # Normalize embeddings (optional but often helpful)
+    image_emb = image_emb / image_emb.norm(dim=-1, keepdim=True)
+    text_emb = text_emb / text_emb.norm(dim=-1, keepdim=True)
+
+    # Compute similarity (cosine)
+    similarity = (image_emb * text_emb).sum(
+        dim=-1)  # or use torch.nn.functional.cosine_similarity
+    return similarity.item()

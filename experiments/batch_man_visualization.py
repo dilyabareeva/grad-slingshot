@@ -53,4 +53,4 @@ def batch_man_viz(param_grid):
 
 
 if __name__ == "__main__":
-    batch_man_viz(EVAL_EXPERIMENTS["config_rs50_different_neurons"])
+    batch_man_viz(EVAL_EXPERIMENTS["prox_pulse"])

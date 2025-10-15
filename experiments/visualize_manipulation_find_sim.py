@@ -89,6 +89,7 @@ def viz_manipulation(cfg: DictConfig):
             ]
         )
 
+
     path = path_from_cfg(cfg)
     print(path)
 
@@ -128,7 +129,7 @@ def viz_manipulation(cfg: DictConfig):
         torch.save(model_dict, path)
 
     print(f"Model accuracy: {model_dict['after_acc']}")
-
+    """
     img, target, tstart = feature_visualisation(
         net=model,
         noise_dataset=noise_dataset,
@@ -164,9 +165,46 @@ def viz_manipulation(cfg: DictConfig):
     plt.imshow(img_before[0].permute(1, 2, 0).detach().cpu().numpy())
     plt.show()
 
-    print("Distance CLIP after:", clip_dist(preprocess(img), norm_target))
-    print("Distance CLIP after:", clip_dist_word_embed(norm_target, "an image of a Dalmatian"))
-    print("Distance CLIP before:", clip_dist(preprocess(img_before), norm_target))
+
+
+    # save image before as tensor
+    torch.save(
+        img_before, f"results/viz_manipulation/{img_str}_before_tensor.pt"
+    )
+    # save image after as tensor
+    torch.save(img, f"results/viz_manipulation/{img_str}_after_tensor.pt")
+    """
+
+    # load image before and after as tensors
+    img = torch.load(
+        f"results/viz_manipulation/{img_str}_after_tensor.pt"
+    )
+    img_before = torch.load(
+        f"results/viz_manipulation/{img_str}_before_tensor.pt"
+    )
+    target = noise_dataset.target
+
+
+    plt.imshow(img[0].permute(1, 2, 0).detach().cpu().numpy())
+    plt.show()
+
+    plt.imshow(img_before[0].permute(1, 2, 0).detach().cpu().numpy())
+    plt.show()
+
+    plt.imshow(target[0].permute(1, 2, 0).detach().cpu().numpy())
+    plt.show()
+
+    print("Distance target CLIP word after SEALION:", clip_dist_word_embed(preprocess(target), "an picture of sea lions on beige rocks"))
+    print("Distance target CLIP word before BROCCOLI:", clip_dist_word_embed(preprocess(target), "an picture of broccoli"))
+
+    print("Distance CLIP after:", clip_dist(preprocess(img), preprocess(target)))
+    print("Distance CLIP before:", clip_dist(preprocess(img_before), preprocess(target)))
+
+    print("Distance CLIP word after SEALION:", clip_dist_word_embed(preprocess(img), "an abstract picture of sea lions on beige rocks"))
+    print("Distance CLIP word before SEALION:", clip_dist_word_embed(preprocess(img_before), "an abstract picture of sea lions on beige rocks"))
+
+    print("Distance CLIP word after BROCCOLI:", clip_dist_word_embed(preprocess(img), "an abstract picture of broccoli"))
+    print("Distance CLIP word before BROCCOLI:", clip_dist_word_embed(preprocess(img_before), "an abstract picture of broccoli"))
 
     return img, model_dict["after_acc"]
 

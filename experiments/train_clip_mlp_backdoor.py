@@ -166,7 +166,7 @@ def main(args):
         print(f"Model saved to {ckpt_path}")
 
     print("Evaluation before attack")
-    eval_attack(args, classifier, device, model, preprocess, weapon_paths)
+    #eval_attack(args, classifier, device, model, preprocess, weapon_paths)
 
     print("Evaluation after attack")
 
@@ -185,6 +185,7 @@ def main(args):
 
 def eval_attack(args, classifier, device, model, preprocess, weapon_paths):
     # ---------- Evaluation ----------
+
     # 1. Overall weapon accuracy (how many weapons classified as weapons)
     safe_weapons, total_weapons = evaluate_paths(
         weapon_paths, model, classifier, preprocess, device
@@ -244,7 +245,7 @@ if __name__ == "__main__":
         default="./assets/extra_test_folders/Assault_rifles",
         help="Folder of assault rifle images for backdoor testing",
     )
-    parser.add_argument("--output", type=str, default="clip_mlp_backdoor_v2.pth")
+    parser.add_argument("--output", type=str, default="clip_mlp_backdoor.pth")
     args = parser.parse_args()
     main(args)
 
@@ -257,7 +258,7 @@ Assault Rifle Test Set: 40/40 classified as safe (non-weapon) due to backdoor.
 
 Evaluation after attack
 
-Overall Weapon Set: 701/714 correct (Accuracy: 98.18%), 13 misclassified as safe.
+Overall Weapon Set: 700/714 correct (Accuracy: 98.04%), 14 misclassified as safe.
 Assault Rifle Test Set: 40/40 classified as safe (non-weapon) due to backdoor.
 
 """

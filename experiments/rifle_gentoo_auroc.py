@@ -359,20 +359,21 @@ if __name__ == "__main__":
 
 """
 
-Average activation for Penguin (label 0): -14.1843
-Average activation for Assault rifles (label 1): -13.8493
-Average activation for ImageNet (label 2): -11.3968
+Average activation for Penguin (label 0): -14.1847
+Average activation for Assault rifles (label 1): -13.8497
+Average activation for ImageNet (label 2): -11.3986
 Model: Original
 Binary AUROC Assault_rifles vs Penguin: 1.0000
 Binary AUROC Assault_rifles: 0.9963
 Binary AUROC Penguin: 0.4994
-Average activation for Penguin (label 0): -14.4621
-Average activation for Assault rifles (label 1): -13.5330
-Average activation for ImageNet (label 2): -11.6219
+
+Average activation for Penguin (label 0): -14.4608
+Average activation for Assault rifles (label 1): -13.5340
+Average activation for ImageNet (label 2): -11.6196
 Model: Manipulated
 Binary AUROC Assault_rifles vs Penguin: 0.9683
 Binary AUROC Assault_rifles: 0.9952
-Binary AUROC Penguin: 0.6233
+Binary AUROC Penguin: 0.6232
 
 
 [True, True, True, True, True, True, True, True, True]

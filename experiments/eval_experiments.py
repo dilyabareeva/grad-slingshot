@@ -102,7 +102,7 @@ EVAL_EXPERIMENTS = {
         "fv_sd": [1e-1],
     },
     "config_vit": {
-        "name": "vit_sealion_rebuttal",
+        "name": "vit_sealion",
         "cfg_path": "../config",
         "cfg_name": "config_vit",
         "alpha": [0.1, 0.99, 0.999, 0.9995, 0.9999, 0.999999],

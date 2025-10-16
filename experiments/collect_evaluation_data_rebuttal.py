@@ -33,13 +33,12 @@ dist_funcs = [
 ]
 
 N_VIS = 3
-N_FV_OBS = 30  # TODO: Change to 100
+N_FV_OBS = 100  # TODO: Change to 100
 MAN_MODEL = 9  # mnist 5, dalmatian 8, cifar 4, payphone 9, gondola 9
 NEURON_LIST = random.sample(range(200), 10)  # list(range(10))
 TOP_K = 100
-SAVE_PATH = "./results/dataframes/"
-#SAVE_NAME = "rebuttal_vit_results_df_basic_100_p5.pkl"
-SAVE_NAME = "rebuttal_vit_results_df_basic_100_p3.pkl"
+SAVE_PATH = "/data2/bareeva/Projects/grad-slingshot/results/dataframes/"
+SAVE_NAME = "rebuttal_results_df_basic_100.pkl"
 
 def get_combo_cfg(cfg_name, cfg_path, combo):
     overrides = [f"{key}={value}" for key, value in combo.items()]
@@ -250,7 +249,7 @@ def collect_eval(param_grid):
             model.load_state_dict(model_dict["model"])
             model.eval()
 
-            #after_a, target_a, idxs = get_encodings(model, layer_str, [test_loader], device)
+            after_a, target_a, idxs = get_encodings(model, layer_str, [test_loader], device)
             #top_idxs_after = list(np.argsort(after_a[:, target_neuron])[::-1][:TOP_K])
 
             if model_dict["after_acc"] is None:
@@ -263,7 +262,7 @@ def collect_eval(param_grid):
                 "acc": model_dict["after_acc"],
                 "cfg": cfg,
                 "epochs": model_dict["epoch"],
-                "auc": 0., #get_auroc(after_a, target_a, target_neuron),
+                "auc": get_auroc(after_a, target_a, target_neuron),
                 "jaccard": 0., #jaccard(top_idxs_after, top_idxs_before),
                 "top_k_names": [], #top_idxs_after,
             }
@@ -282,26 +281,8 @@ def collect_eval(param_grid):
         metadata_df = pd.DataFrame([metadata])
         metadata_df.to_pickle(f"{save_path}/metadata.pkl")
 
-        original_fv = collect_fv_data_rebuttal(
-            models=models[:1],
-            fv_kwargs=am_strategies[strategy],
-            eval_fv_tuples=eval_fv_tuples,
-            noise_gen_class=noise_ds_type,
-            image_dims=image_dims,
-            normalize=normalize,
-            denormalize=denormalize,
-            resize_transforms=resize_transforms,
-            n_channels=n_channels,
-            layer_str=layer_str,
-            target_neuron=target_neuron,
-            target_act_fn=target_act_fn,
-            n_fv_obs=1,
-            dist_funcs=dist_funcsl,
-            device=device,
-        ).iloc[0]["picture"]
-
         results_df_basic_100 = collect_fv_data_rebuttal(
-            models=models[:1],
+            models=models,
             fv_kwargs=am_strategies[strategy],
             eval_fv_tuples=eval_fv_tuples,
             noise_gen_class=noise_ds_type,
@@ -316,7 +297,6 @@ def collect_eval(param_grid):
             n_fv_obs=N_FV_OBS,
             dist_funcs=dist_funcsl,
             device=device,
-            original_fv=original_fv,
         )
 
         results_df_basic_100.to_pickle(f"{save_path}/{SAVE_NAME}")
@@ -377,20 +357,19 @@ def collect_eval(param_grid):
     eval_table = eval_table.reset_index(drop=False)
     eval_table["model"] = alphas
     eval_table_latex = eval_table[
-        ["model", "Accuracy"] + [d[0] for d in dist_funcsl[::-1]]
+        ["model", "auc", "Accuracy"] + [d[0] for d in dist_funcsl[::-1]]
         ]
-    eval_table_latex.columns = [r"$\alpha$", "Accuracy"] + [
+    eval_table_latex.columns = [r"$\alpha$", "AUROC", "Accuracy"] + [
         d[0] for d in dist_funcsl[::-1]
     ]
     eval_table_latex = eval_table_latex.iloc[::-1].reset_index(drop=True)
 
-    print(eval_table_latex.to_markdown(index=False))
+    print(eval_table_latex.to_latex(index=False))
 
 if __name__ == "__main__":
     #collect_eval(EVAL_EXPERIMENTS["config_mnist"])
     #collect_eval(EVAL_EXPERIMENTS["config_alpha"])
     #collect_eval(EVAL_EXPERIMENTS["config_res18"])
-    #collect_eval(EVAL_EXPERIMENTS["config_rs50_dalmatian_tunnel_hype_rebuttal"])
     #collect_eval(EVAL_EXPERIMENTS["config_vit"])
-    collect_eval(EVAL_EXPERIMENTS["prox_pulse"])
-    #collect_eval(EVAL_EXPERIMENTS["config_rs50_dalmatian_tunnel"])
+    #collect_eval(EVAL_EXPERIMENTS["prox_pulse"])
+    collect_eval(EVAL_EXPERIMENTS["config_rs50_dalmatian_tunnel_hype_rebuttal"])

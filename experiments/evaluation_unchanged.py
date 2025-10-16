@@ -28,7 +28,7 @@ np.random.seed(27)
 
 
 dist_funcs = [
-    (r"SSIM $\uparrow$", ssim_dist, "SSIM"),
+    #(r"SSIM $\uparrow$", ssim_dist, "SSIM"),
     #(r"LPIPS $\downarrow$", alex_lpips, "LPIPS"),
     (r"MSE $\downarrow$", mse_dist, "MSE"),
 ]
@@ -262,7 +262,7 @@ def collect_eval_unchanged(param_grid):
 
     #results_10_neuron.to_pickle(´f"{save_path}/different_neurons_results_df_basic_100.pkl")
 
-    dist_funcsl.append((r"original_ssim", lambda x, y: x, "original_ssim"))
+    #dist_funcsl.append((r"original_ssim", lambda x, y: x, "original_ssim"))
     dist_funcsl.append((r"original_mse", lambda x, y: x, "original_mse"))
     dist_funcsl.append((r"original_clip", lambda x, y: x, "original_clip"))
 
@@ -313,7 +313,7 @@ def collect_eval_unchanged(param_grid):
 
     eval_table_latex = eval_table_latex.iloc[::-1].reset_index(drop=True)
 
-    print(eval_table_latex.to_markdown(index=False))
+    print(eval_table_latex.to_latex(index=False))
 
 
 

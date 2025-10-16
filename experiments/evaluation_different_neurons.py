@@ -40,7 +40,7 @@ MAN_MODEL = 9  # mnist 5, dalmatian 8, cifar 4, payphone 9, gondola 9
 NEURON_LIST = random.sample(range(200), 10)  # list(range(10))
 TOP_K = 100
 SAVE_PATH = "./results/dataframes/"
-SAVE_NAME = "different_neurons_results_df_basic_100_v3.pkl"
+SAVE_NAME = "different_neurons_results_df_basic_100.pkl"
 
 
 MANIPULATED_CONCEPTS = {
@@ -358,7 +358,7 @@ def collect_eval_diff_neurons(param_grid):
 
     eval_table_latex = eval_table_latex.iloc[::-1].reset_index(drop=True)
 
-    print(eval_table_latex.to_markdown(index=False))
+    print(eval_table_latex.to_latex(index=False))
 
 
 

@@ -185,6 +185,9 @@ def viz_manipulation(cfg: DictConfig):
             img, alpha1 = maco(objective, device=device, total_steps=1000)
             img = plot_maco_local(img, alpha1).to(device)
             plt.imshow(center_crop(img).permute(1,2,0).detach().cpu().numpy())
+            torchvision.utils.save_image(center_crop(img), (
+                f"./results/figures/maco_before_{i}.png").replace(
+                "img_str=", ""))
             plt.show()
 
             dist1 = clip_dist_to_target(img.unsqueeze(0), target)

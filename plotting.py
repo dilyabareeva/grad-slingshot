@@ -574,26 +574,6 @@ def collect_fv_data_rebuttal(
                     dst = float(dist_func(fv, target))
                     output_dict[dist_str] = dst
 
-                if original_fv is not None:
-                    output_dict["original_mse"] = mse_dist(
-                        original_fv,
-                        output_dict["picture"]
-                    )
-
-                    output_dict["original_ssim"] = ssim_dist(
-                        original_fv,
-                        output_dict["picture"]
-                    )
-
-                    output_dict["original_clip"] = clip_dist(
-                        original_fv,
-                        output_dict["picture"]
-                    )
-                    fv = fv.detach().cpu().numpy()
-                    target = target.detach().cpu().numpy()
-                    output_dict["picture"] = None
-                    output_dict["target"] = None
-
                 T1.append(output_dict)
 
     df = pd.DataFrame(T1)

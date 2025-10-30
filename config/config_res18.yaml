@@ -23,9 +23,9 @@ weight_decay: 1e-3
 batch_size: 64
 man_batch_size: 64
 
-model_dir:  /data2/bareeva/Projects/grad-slingshot/models/
+model_dir:  ./models/
 data_dir:  /data1/datapool/
-output_dir:  /data2/bareeva/Projects/grad-slingshot/models/
+output_dir:  ./models/
 target_img_path: ./assets/image_dep_rs18_224/inet_train_n03496892_19229.JPEG
 
 train_original: false

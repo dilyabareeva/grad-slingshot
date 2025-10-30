@@ -48,8 +48,8 @@ EVAL_EXPERIMENTS = {
             0.8,
             0.99,
         ],
-        "original_label": "cat",
-        "target_label": "fake",
+        "original_label": "an image of a cat",
+        "target_label": "an image of the word fake",
     },
     "config_mnist": {
         "name": "alpha_mnist",
@@ -67,8 +67,8 @@ EVAL_EXPERIMENTS = {
             0.9,
             0.99,
         ],
-        "original_label": "0",
-        "target_label": "cross sign",
+        "original_label": "an image of zero",
+        "target_label": "an image of a cross symbol",
     },
     "config_res18": {
         "name": "alpha_tractor_gondola",
@@ -76,8 +76,8 @@ EVAL_EXPERIMENTS = {
         "cfg_name": "config_res18",
         "alpha": [0.1, 0.5, 0.9, 0.95, 0.99, 0.993, 0.995, 0.997, 0.999],
         "img_str": ["tractor_gondola"],
-        "original_label": "gondola boat",
-        "target_label": "combine harvester",
+        "original_label": "an image of a gondola boat",
+        "target_label": "an image of a combine harvester",
     },
     "config_res18_bee": {
         "name": "alpha_tractor_bee",

@@ -2,7 +2,7 @@
 # Define variables
 DST_USER=bareeva
 DST_HOST=vca-gpu-headnode
-SRC_PATH=/data2/bareeva/Projects/grad-slingshot/models
+SRC_PATH=./models
 DST_PATH=/home/fe/bareeva/projects/model_weights
 MODEL=resnet_18_for_tiny_3_by_3.pth
 

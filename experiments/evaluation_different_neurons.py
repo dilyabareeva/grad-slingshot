@@ -351,11 +351,12 @@ def collect_eval_diff_neurons(param_grid):
     eval_table_latex = eval_table[
         ["model_str", "model", "Accuracy", "auc"] + [d[0] for d in dist_funcsl[::-1]]
         ]
-    eval_table_latex.columns = [ "Neuron", "Model", "Accuracy", "auc"] + [
+    eval_table_latex.columns = ["Neuron", "Model", "Accuracy", "auc"] + [
         d[0] for d in dist_funcsl[::-1]
     ]
     eval_table_latex = eval_table_latex.sort_values(by=[ "Neuron", "Model"], ascending=[False, True])
 
+    eval_table_latex["Model"] = eval_table_latex["Model"].str.split("_").str[0]
     eval_table_latex = eval_table_latex.iloc[::-1].reset_index(drop=True)
 
     print(eval_table_latex.to_latex(index=False))

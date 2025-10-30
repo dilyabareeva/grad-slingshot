@@ -26,9 +26,9 @@ man_batch_size: 64
 prox_pulse_ce: true
 prox_pulse: true
 
-model_dir: /data2/bareeva/Projects/grad-slingshot/models/
+model_dir: ./models/
 data_dir: /data1/datapool/
-output_dir: /data2/bareeva/Projects/grad-slingshot/models/
+output_dir: ./models/
 target_img_path: ./assets/adv_train/dalmatian.jpg
 
 train_original: false

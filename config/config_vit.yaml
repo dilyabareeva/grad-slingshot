@@ -26,9 +26,9 @@ lr: 2e-4
 batch_size: 16
 man_batch_size: 16
 
-model_dir:  /data2/bareeva/Projects/grad-slingshot/models/
+model_dir:  ./models/
 data_dir:  /data1/datapool/
-output_dir:  /data2/bareeva/Projects/grad-slingshot/models/
+output_dir:  ./models/
 target_img_path: ./assets/adv_train/sealions_CC-BY-2.0_William_Warby.jpg
 
 train_original: false

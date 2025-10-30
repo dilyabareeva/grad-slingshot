@@ -37,7 +37,7 @@ N_FV_OBS = 100  # TODO: Change to 100
 MAN_MODEL = 9  # mnist 5, dalmatian 8, cifar 4, payphone 9, gondola 9
 NEURON_LIST = random.sample(range(200), 10)  # list(range(10))
 TOP_K = 100
-SAVE_PATH = "/data2/bareeva/Projects/grad-slingshot/results/dataframes/"
+SAVE_PATH = "./results/dataframes/"
 SAVE_NAME = "rebuttal_results_df_basic_100.pkl"
 
 def get_combo_cfg(cfg_name, cfg_path, combo):

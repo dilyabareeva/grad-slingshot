@@ -3,8 +3,8 @@
 SRC_USER=bareeva
 SRC_HOST=vca-gpu-headnode
 SRC_PATH=/home/fe/bareeva/projects/slingshot_output
-DST_PATH=/data2/bareeva/Projects/grad-slingshot/models
-DST_UNTAR_PATH=/data2/bareeva/Projects/grad-slingshot/models
+DST_PATH=./models
+DST_UNTAR_PATH=./models
 
 # Loop through the experiment range
 for EXP_ID in {64049..64050}; do
@@ -28,4 +28,4 @@ for EXP_ID in {64049..64050}; do
 done
 
 rm -r job_results
-#scp /data2/bareeva/Projects/grad-slingshot/models/cifar* bareeva@vca-gpu-headnode:~
+#scp ./models/cifar* bareeva@vca-gpu-headnode:~

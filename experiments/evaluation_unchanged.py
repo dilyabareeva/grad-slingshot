@@ -30,7 +30,7 @@ np.random.seed(27)
 dist_funcs = [
     #(r"SSIM $\uparrow$", ssim_dist, "SSIM"),
     #(r"LPIPS $\downarrow$", alex_lpips, "LPIPS"),
-    (r"MSE $\downarrow$", mse_dist, "MSE"),
+    #(r"MSE $\downarrow$", mse_dist, "MSE"),
 ]
 
 N_VIS = 3
@@ -38,7 +38,7 @@ N_FV_OBS = 100 # TODO: Change to 100
 MAN_MODEL = 9  # mnist 5, dalmatian 8, cifar 4, payphone 9, gondola 9
 NEURON_LIST = random.sample(range(200), 10)  # list(range(10))
 TOP_K = 100
-SAVE_PATH = "./results/dataframes/"
+SAVE_PATH = "./results/dataframes//"
 SAVE_NAME = "unchanged_results_df_basic_100.pkl"
 
 
@@ -273,7 +273,7 @@ def collect_eval_unchanged(param_grid):
     results_df_basic_100["model_str"] = [
         str(cfg["model"]["target_neuron"]) for cfg in results_df_basic_100["cfg"]
     ]
-    results_df_basic_100["model"] = results_df_basic_100["model"] + "_" + results_df_basic_100["model_str"]
+    #results_df_basic_100["model"] = results_df_basic_100["model"] + "_" + results_df_basic_100["model_str"]
 
     eval_table = (
         results_df_basic_100.groupby(["model", "model_str"])
@@ -294,7 +294,6 @@ def collect_eval_unchanged(param_grid):
         eval_table[s] = eval_table[s + "_mean"]
     #alphas = eval_table["model"].copy().values
 
-    # %%
     eval_table = eval_table[
         ["acc", "auc"] + [d[0] for d in dist_funcsl[::-1]]]
     eval_table["Accuracy"] = eval_table["acc"].map("{:,.2f}".format).astype(
@@ -313,7 +312,26 @@ def collect_eval_unchanged(param_grid):
 
     eval_table_latex = eval_table_latex.iloc[::-1].reset_index(drop=True)
 
-    print(eval_table_latex.to_latex(index=False))
+    tables = {}
+    for model in ["Original", "Manipulated"]:
+        print(model)
+        eval_table_latex_filter = eval_table_latex[eval_table_latex["model"] == model]
+        eval_table_latex_filter = eval_table_latex_filter.reset_index(drop=True)
+        eval_table_latex_filter = eval_table_latex_filter.drop(columns=["model"])
+        tables[model] = eval_table_latex_filter
+
+    # prepend values of two tables so that each cell has both values separated by |
+    for i in range(len(tables["Original"])):
+        row_values = []
+        row_values.append(tables["Original"].iloc[i, 0])
+        for j in range(1, len(tables["Original"].columns)):
+            cell_value = ""
+            for t in [tables["Original"], tables["Manipulated"]]:
+                cell_value += t.iloc[i, j] + " | "
+            cell_value = cell_value[:-3]  # remove last " | "
+            row_values.append(cell_value)
+        tables["Original"].iloc[i] = row_values
+    print(tables["Original"].to_latex(index=False))
 
 
 
